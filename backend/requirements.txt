@@ -1,0 +1,17 @@
+altgraph==0.17.5
+asgiref==3.11.1
+channels==4.3.2
+chess==1.11.2
+Django==6.0.3
+django-cors-headers==4.9.0
+djangorestframework==3.17.1
+packaging==26.0
+pefile==2024.8.26
+pyinstaller-hooks-contrib==2026.4
+pywin32-ctypes==0.2.3
+setuptools<82
+sqlparse==0.5.5
+tzdata==2026.1
+waitress==3.0.2
+numpy==2.4.4
+psutil==7.2.2

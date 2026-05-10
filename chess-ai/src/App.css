@@ -1,0 +1,663 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1e1e1e;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* MENU */
+.menu {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu button {
+  padding: 12px 30px;
+  background: #3a3a3a;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+/* GAME */
+.game {
+  min-height: 100vh;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* BOARD */
+.board {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* SQUARES */
+.square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.light {
+  background: #f0d9b5;
+}
+
+.dark {
+  background: #b58863;
+}
+
+/* HIGHLIGHTS */
+.highlight {
+  background: rgba(0, 255, 0, 0.3);
+}
+
+.last {
+  background: rgba(255, 215, 0, 0.4);
+}
+
+.hint {
+  background: rgba(80, 160, 255, 0.4);
+}
+
+/* ===================== */
+/* HINT PANEL            */
+/* ===================== */
+
+/* Flex row wrapping the board and the hint panel side-by-side */
+.game-board-area {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* Side card that appears to the right of the board in easy mode */
+.hint-panel {
+  width: 340px;
+  background: #141e2e;
+  border: 1px solid #2a4a7a;
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: hint-slide-in 0.25s ease;
+  flex-shrink: 0;
+}
+
+@keyframes hint-slide-in {
+  from { opacity: 0; transform: translateX(10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.hint-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hint-panel-label {
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: monospace;
+}
+
+.hint-panel-dismiss {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+
+.hint-panel-dismiss:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* The SAN notation of the recommended move */
+.hint-panel-move {
+  font-size: 3.5rem;
+  font-family: monospace;
+  color: #89bbff;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+/* Human-readable explanation of why the move is better */
+.hint-panel-reason {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+/* Optional pawn-unit advantage footer */
+.hint-panel-eval {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: monospace;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 8px;
+}
+
+/* Slide counter — "Move 2 of 4" */
+.hint-panel-counter {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+  font-family: monospace;
+}
+
+/* Prev / Next navigation row */
+.hint-panel-nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.hint-panel-nav-btn {
+  flex: 1;
+  padding: 10px 0;
+  background: #1e3050;
+  border: 1px solid #2a4a7a;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+  font-family: monospace;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.hint-panel-nav-btn:hover:not(:disabled) {
+  background: #2a4a7a;
+  color: #fff;
+}
+
+.hint-panel-nav-btn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+/* "Play AI Move →" continue button */
+.hint-panel-continue {
+  margin-top: 4px;
+  padding: 12px 0;
+  background: #3d3022;
+  border: 1px solid #b58863;
+  border-radius: 8px;
+  color: #f0d9b5;
+  font-size: 1.1rem;
+  font-family: monospace;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: center;
+}
+
+.hint-panel-continue:hover {
+  background: #4d3c2a;
+}
+
+/* Whose-turn label above the move SAN */
+.hint-turn-label {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+.hint-turn-you  { color: #7ab8f5; }
+.hint-turn-them { color: #f5a07a; }
+
+/* Wrapper that centres the mini board inside the hint panel */
+.hint-mini-board-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+/* Mini board grid — 8×8 of SQ_PX×SQ_PX squares */
+.mini-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(8, 36px);
+  grid-template-rows: repeat(8, 36px);
+  border: 1px solid #444;
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.mini-sq {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.mini-light { background: #f0d9b5; }
+.mini-dark  { background: #b58863; }
+
+/* Origin square: amber highlight */
+.mini-from { background: rgba(255, 180, 0, 0.75); }
+
+/* Destination square: green highlight */
+.mini-to   { background: rgba(80, 200, 100, 0.75); }
+
+.mini-piece {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
+
+/* Faint note on continuation slides */
+.hint-continuation-note {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* PIECES */
+.piece {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  pointer-events: auto;
+  user-select: none;
+  cursor: grab;
+}
+
+/* DRAGGING PIECE (CENTERED CORRECTLY) */
+.dragging-piece {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 9999;
+
+  transform: translate(-50%, -50%);
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.player-elo {
+  color: #aaa;
+  font-size: 14px;
+  font-family: monospace;
+  margin: 6px 0;
+}
+/* DEBUG */
+.debug {
+  margin-top: 15px;
+  padding: 10px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 260px;
+}
+
+.spinner {
+  border: 6px solid #eee;
+  border-top: 6px solid #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 20px auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.progress-bar {
+  width: 80%;
+  height: 10px;
+  background: #ddd;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.3s;
+}
+
+/* ===================== */
+/* LOADING SCREEN        */
+/* ===================== */
+
+.loading-screen {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  overflow: hidden;
+}
+
+/* Subtle chess board grid in the background */
+.loading-board-bg {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-conic-gradient(
+    rgba(255, 255, 255, 0.03) 0% 25%,
+    transparent 0% 50%
+  ) 0 0 / 80px 80px;
+  z-index: 0;
+}
+
+.loading-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+/* Floating knight piece */
+.loading-piece {
+  font-size: 96px;
+  line-height: 1;
+  color: #f0d9b5;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
+  animation: loading-float 2.8s ease-in-out infinite;
+  user-select: none;
+}
+
+@keyframes loading-float {
+  0%, 100% { transform: translateY(0px)   rotate(-6deg); }
+  50%       { transform: translateY(-20px) rotate(6deg);  }
+}
+
+/* Title */
+.loading-title {
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  color: #f0d9b5;
+  font-family: Georgia, serif;
+}
+
+/* Thin progress bar */
+.loading-bar-wrap {
+  width: 260px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #b58863, #f0d9b5);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 10px rgba(240, 217, 181, 0.5);
+}
+
+/* BOARD COORDS — flexbox layout wrapping the board with file/rank labels */
+.board-outer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.coords-files-row {
+  display: flex;
+  width: min(90vmin, 700px);
+  margin-left: 22px;
+  padding: 3px 0;
+}
+
+.coords-files-row span {
+  flex: 1;
+  text-align: center;
+}
+
+.coords-board-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.coords-ranks-col {
+  width: 22px;
+  display: flex;
+  flex-direction: column;
+  height: min(90vmin, 700px);
+}
+
+.coords-ranks-col span {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coords-label {
+  font-size: 1.24rem;
+  color: rgba(240, 217, 181, 0.7);
+  font-family: monospace;
+  user-select: none;
+}
+
+/* BOARD WRAP — needed for thinking overlay positioning */
+.board-wrap {
+  position: relative;
+  width: min(90vmin, 700px);
+  height: min(90vmin, 700px);
+}
+
+/* Thinking overlay sits on top of the board */
+.thinking-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 10px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.thinking-overlay-text {
+  font-size: 1.4rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #f0d9b5;
+  font-family: monospace;
+  font-weight: 300;
+  animation: thinking-pulse 1.2s ease-in-out infinite;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes thinking-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+.board.thinking {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Subtle status text */
+.loading-status {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+/* Indeterminate progress bar for training wait screen */
+.loading-bar-animated {
+  width: 40% !important;
+  animation: bar-slide 1.6s ease-in-out infinite;
+}
+
+@keyframes bar-slide {
+  0%   { margin-left: 0%;   width: 40%; }
+  50%  { margin-left: 60%;  width: 40%; }
+  100% { margin-left: 0%;   width: 40%; }
+}
+
+/* ===================== */
+/* GAME OVER POPUP       */
+/* ===================== */
+
+.gameover-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fade-in-overlay 0.25s ease;
+}
+
+@keyframes fade-in-overlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.gameover-modal {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 14px;
+  padding: 44px 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  min-width: 300px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+  animation: modal-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modal-pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.gameover-title {
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #f0d9b5;
+  font-family: Georgia, serif;
+  margin: 0;
+}
+
+.gameover-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-family: monospace;
+  margin: 0;
+}
+
+.gameover-training {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-family: monospace;
+  margin-top: 4px;
+}
+
+.gameover-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #b58863;
+  display: inline-block;
+  animation: thinking-pulse 1.2s ease-in-out infinite;
+}
+
+.gameover-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.gameover-btn {
+  padding: 11px 26px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #2a2a2a;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: monospace;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.gameover-btn:hover {
+  background: #3a3a3a;
+  color: #fff;
+}
+
+.gameover-btn.primary {
+  background: #3d3022;
+  border-color: #b58863;
+  color: #f0d9b5;
+}
+
+.gameover-btn.primary:hover {
+  background: #4d3c2a;
+}

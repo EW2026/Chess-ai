@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <body style="margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#111;color:white;font-family:sans-serif;">
+    <div style="text-align:center">
+      <h1>♟️ Chess AI</h1>
+      <p>Starting engine...</p>
+      <div class="spinner"></div>
+    </div>
+
+    <style>
+      .spinner {
+        margin-top:20px;
+        width:40px;
+        height:40px;
+        border:4px solid #444;
+        border-top:4px solid white;
+        border-radius:50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </body>
+</html>

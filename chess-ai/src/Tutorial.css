@@ -1,0 +1,616 @@
+/* ─── Tutorial Shell ─────────────────────────────────────────── */
+
+.tut-select,
+.tut-game,
+.tut-complete {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px 40px;
+  gap: 20px;
+  background: #1e1e1e;
+  color: #f0d9b5;
+}
+
+/* ─── Opening Selection ──────────────────────────────────────── */
+
+.tut-select-header {
+  text-align: center;
+}
+
+.tut-select-header h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  font-family: Georgia, serif;
+  color: #f0d9b5;
+  margin-bottom: 6px;
+}
+
+.tut-select-header p {
+  font-size: 0.85rem;
+  color: rgba(240, 217, 181, 0.5);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* ─── Section Labels ─────────────────────────────────────────── */
+
+.tut-section-label {
+  width: 100%;
+  max-width: 860px;
+  font-size: 1.0rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(240, 217, 181, 0.35);
+  font-family: monospace;
+  padding-left: 4px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Card Grid ──────────────────────────────────────────────── */
+
+.tut-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 860px;
+}
+
+.tut-cards--special {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.tut-card {
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.tut-card:hover {
+  background: #333;
+  border-color: #b58863;
+  transform: translateY(-2px);
+}
+
+.tut-card--special {
+  border-color: #2e2820;
+  background: #221e18;
+}
+
+.tut-card--special:hover {
+  border-color: #b58863;
+  background: #2a231a;
+}
+
+.tut-card-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f0d9b5;
+}
+
+.tut-card-desc {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.45;
+}
+
+.tut-card-side {
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #b58863;
+  margin-top: 4px;
+}
+
+/* ─── Color Picker ───────────────────────────────────────────── */
+
+.tut-colorpick {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.tut-color-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 180px;
+  padding: 32px 20px 24px;
+  border-radius: 12px;
+  border: 2px solid #3a3a3a;
+  background: #252525;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  position: relative;
+}
+
+.tut-color-btn:hover {
+  background: #2f2f2f;
+  transform: translateY(-3px);
+}
+
+.tut-color-white:hover { border-color: #e8d5a3; }
+.tut-color-black:hover { border-color: #b58863; }
+
+.tut-color-btn.recommended {
+  border-color: #b58863;
+}
+
+.tut-color-icon {
+  font-size: 64px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+
+.tut-color-label {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: monospace;
+  color: #f0d9b5;
+}
+
+.tut-color-tag {
+  position: absolute;
+  top: -11px;
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: monospace;
+  background: #b58863;
+  color: #1a1a1a;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ─── Back Button ────────────────────────────────────────────── */
+
+.tut-back-btn {
+  background: transparent;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  color: rgba(240, 217, 181, 0.6);
+  font-size: 0.82rem;
+  padding: 6px 14px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: border-color 0.15s, color 0.15s;
+  align-self: flex-start;
+}
+
+.tut-back-btn:hover {
+  border-color: #b58863;
+  color: #f0d9b5;
+}
+
+/* ─── Game Header ────────────────────────────────────────────── */
+
+.tut-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: min(90vmin, 700px);
+}
+
+.tut-opening-name {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-align: center;
+  color: #f0d9b5;
+  font-family: Georgia, serif;
+  letter-spacing: 2px;
+}
+
+.tut-progress-label {
+  font-size: 0.75rem;
+  color: rgba(240, 217, 181, 0.4);
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+/* ─── Progress Bar ───────────────────────────────────────────── */
+
+.tut-progress-wrap {
+  width: 100%;
+  max-width: min(90vmin, 700px);
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.tut-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #b58863, #f0d9b5);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* ─── Status Banner ──────────────────────────────────────────── */
+
+.tut-status {
+  font-size: 0.78rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(240, 217, 181, 0.45);
+  height: 20px;
+  transition: color 0.2s;
+}
+
+.tut-status--wrong {
+  color: #e05c5c;
+}
+
+.tut-status--right {
+  color: #5cb85c;
+}
+
+.tut-status--thinking {
+  color: rgba(240, 217, 181, 0.35);
+}
+
+/* ─── Board + Right Panel Row ───────────────────────────────── */
+
+.tut-board-and-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.tut-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  max-width: 360px;
+  min-width: 220px;
+}
+
+/* ─── Board Coordinates ─────────────────────────────────────── */
+
+.tut-board-outer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tut-coords-files-row {
+  display: flex;
+  width: min(90vmin, 700px);
+  margin-left: 22px;
+  padding: 3px 0;
+}
+
+.tut-coords-files-row span {
+  flex: 1;
+  text-align: center;
+}
+
+.tut-coords-board-row {
+  display: flex;
+  align-items: stretch;
+}
+
+.tut-coords-ranks-col {
+  width: 22px;
+  display: flex;
+  flex-direction: column;
+  height: min(90vmin, 700px);
+}
+
+.tut-coords-ranks-col span {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tut-coords-label {
+  font-size: 1.24rem;
+  color: rgba(240, 217, 181, 0.7);
+  font-family: monospace;
+  user-select: none;
+}
+
+/* ─── Board ──────────────────────────────────────────────────── */
+
+.tut-board {
+  width: min(90vmin, 700px);
+  height: min(90vmin, 700px);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tut-square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.tut-light {
+  background: #f0d9b5;
+}
+
+.tut-dark {
+  background: #b58863;
+}
+
+.tut-last {
+  background: rgba(255, 215, 0, 0.45);
+}
+
+.tut-hint {
+  background: rgba(80, 200, 120, 0.55);
+}
+
+/* ─── Pieces ─────────────────────────────────────────────────── */
+
+.tut-piece {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  cursor: grab;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.tut-dragging {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+}
+
+/* ─── Explanation Panel ──────────────────────────────────────── */
+
+.tut-explain {
+  width: 100%;
+  min-height: 54px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  color: rgba(240, 217, 181, 0.8);
+  line-height: 1.55;
+}
+
+/* ─── Complete Screen ────────────────────────────────────────── */
+
+.tut-complete {
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+}
+
+.tut-complete-icon {
+  font-size: 80px;
+  color: #f0d9b5;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6));
+  animation: tut-float 3s ease-in-out infinite;
+  line-height: 1;
+}
+
+@keyframes tut-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+.tut-complete h1 {
+  font-size: 1.8rem;
+  font-weight: 300;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  font-family: Georgia, serif;
+}
+
+.tut-complete-name {
+  font-size: 1rem;
+  color: #b58863;
+  letter-spacing: 2px;
+}
+
+.tut-complete-sub {
+  font-size: 0.85rem;
+  color: rgba(240, 217, 181, 0.5);
+  max-width: 340px;
+  line-height: 1.5;
+}
+
+.tut-complete-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.tut-complete-actions button {
+  padding: 10px 24px;
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  color: #f0d9b5;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.tut-complete-actions button:hover {
+  background: #333;
+  border-color: #b58863;
+}
+
+/* ─── Fade Transitions ───────────────────────────────────────── */
+
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── PieceTutorial: Square Highlights ──────────────────────────── */
+
+/* Amber glow on the active piece's square */
+.ptut-active {
+  box-shadow: inset 0 0 0 3px rgba(240, 217, 181, 0.9);
+}
+
+/* Green dot overlaid on destination squares */
+.ptut-dest {
+  position: relative;
+}
+.ptut-dest::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 32%;
+  height: 32%;
+  border-radius: 50%;
+  background: rgba(80, 200, 120, 0.65);
+  pointer-events: none;
+}
+
+/* ─── PieceTutorial: Slide Navigation ───────────────────────────── */
+
+.ptut-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+}
+
+.ptut-nav-btn {
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  color: #f0d9b5;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.ptut-nav-btn:hover {
+  background: #333;
+  border-color: #b58863;
+}
+
+.ptut-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.ptut-nav-btn:disabled:hover {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+/* ─── PieceTutorial: Slide Dot Indicators ────────────────────────── */
+
+.ptut-dots {
+  display: flex;
+  gap: 7px;
+}
+
+.ptut-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(240, 217, 181, 0.2);
+  transition: background 0.2s;
+}
+
+.ptut-dot--active {
+  background: #b58863;
+}
+
+/* ─── Practice Reset Button ─────────────────────────────────────── */
+
+.ptut-reset-btn {
+  width: 100%;
+  padding: 8px 0;
+  background: transparent;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  color: rgba(240, 217, 181, 0.5);
+  font-size: 0.85rem;
+  font-family: monospace;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  text-align: center;
+}
+
+.ptut-reset-btn:hover {
+  background: #2a2a2a;
+  border-color: #b58863;
+  color: #f0d9b5;
+}
+
+/* ─── Finish / Continue Button ──────────────────────────────────── */
+
+.tut-finish-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: #2a3a22;
+  border: 1px solid #4a7a3a;
+  border-radius: 8px;
+  color: rgba(130, 220, 130, 0.9);
+  font-size: 0.9rem;
+  font-family: monospace;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  text-align: center;
+}
+
+.tut-finish-btn:hover {
+  background: #344a2a;
+  border-color: #6aaa5a;
+}
+
+/* ─── PieceTutorial: Practice Instruction Panel ─────────────────── */
+
+.ptut-instruction {
+  width: 100%;
+  min-height: 54px;
+  background: #1e2a1e;
+  border: 1px solid #2a4a2a;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  color: rgba(130, 220, 130, 0.9);
+  line-height: 1.55;
+}
